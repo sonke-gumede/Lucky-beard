@@ -1,4 +1,6 @@
+import styled from "styled-components";
 import { Body } from "../../../shared/typography";
+import Button from "../../../shared/components/Button";
 
 type Props = {
   code: string;
@@ -7,9 +9,13 @@ type Props = {
   onApply: () => void;
 };
 
+const Wrapper = styled.div`
+  margin-top: 24px;
+`;
+
 export function CouponInput({ code, message, onCodeChange, onApply }: Props) {
   return (
-    <div style={{ marginTop: 24 }}>
+    <Wrapper>
       <label>
         Coupon
         <input
@@ -18,8 +24,8 @@ export function CouponInput({ code, message, onCodeChange, onApply }: Props) {
           placeholder="Enter coupon"
         />
       </label>
-      <button onClick={onApply}>Apply</button>
+      <Button onClick={onApply}>Apply</Button>
       <Body>{message}</Body>
-    </div>
+    </Wrapper>
   );
 }

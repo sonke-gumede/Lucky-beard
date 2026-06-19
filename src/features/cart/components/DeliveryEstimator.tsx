@@ -1,9 +1,15 @@
+import styled from "styled-components";
 import { Body } from "../../../shared/typography";
+
 type Props = {
   postcode: string;
   message: string;
   onPostcodeChange: (postcode: string) => void;
 };
+
+const Wrapper = styled.div`
+  margin-top: 24px;
+`;
 
 export function DeliveryEstimator({
   postcode,
@@ -11,7 +17,7 @@ export function DeliveryEstimator({
   onPostcodeChange,
 }: Props) {
   return (
-    <div style={{ marginTop: 24 }}>
+    <Wrapper>
       <label>
         Check delivery
         <input
@@ -21,6 +27,6 @@ export function DeliveryEstimator({
         />
       </label>
       <Body>{message}</Body>
-    </div>
+    </Wrapper>
   );
 }

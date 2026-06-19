@@ -3,9 +3,13 @@ import React from "react";
 type Props = {
   children: React.ReactNode;
   marginTop?: number;
-  style?: React.CSSProperties;
+  className?: string;
 };
 
-export function Section({ children, marginTop, style }: Props) {
-  return <section style={{ marginTop, ...style }}>{children}</section>;
+export function Section({ children, marginTop, className }: Props) {
+  return (
+    <section className={className} style={{ marginTop }}>
+      {children}
+    </section>
+  );
 }

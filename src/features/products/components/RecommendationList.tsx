@@ -1,5 +1,7 @@
 import React from "react";
+import styled from "styled-components";
 import { Section } from "../../../shared/components/Section";
+import { H2, H3, Body } from "../../../shared/typography";
 import type { Recommendation } from "../types";
 
 type Props = {
@@ -8,6 +10,12 @@ type Props = {
   currency: string;
 };
 
+const Grid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+`;
+
 export function RecommendationList({
   recommendations,
   loadingRecommendations,
@@ -15,28 +23,22 @@ export function RecommendationList({
 }: Props) {
   return (
     <Section marginTop={48}>
-      <h2>You may also like</h2>
+      <H2>You may also like</H2>
 
-      {loadingRecommendations && <p>Loading recommendations...</p>}
+      {loadingRecommendations && <Body>Loading recommendations...</Body>}
 
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(4, 1fr)",
-          gap: 16,
-        }}
-      >
+      <Grid>
         {recommendations.map((item) => (
           <article key={item.id}>
             <img src={item.image} alt={item.name} width={200} height={200} />
-            <h3>{item.name}</h3>
-            <p>
+            <H3>{item.name}</H3>
+            <Body>
               {currency} {item.price.toFixed(2)}
-            </p>
+            </Body>
             <a href={`/products/${item.id}`}>View product</a>
           </article>
         ))}
-      </div>
+      </Grid>
     </Section>
   );
 }

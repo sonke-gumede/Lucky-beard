@@ -1,4 +1,5 @@
 import React, { useCallback, useMemo } from "react";
+import styled from "styled-components";
 import { Section } from "../../../shared/components/Section";
 import { CouponInput } from "../../cart/components/CouponInput";
 import { DeliveryEstimator } from "../../cart/components/DeliveryEstimator";
@@ -12,11 +13,44 @@ import { useWishlist } from "../api/productsApi";
 import { useDelivery } from "../../cart/api/cartApi";
 import { useCoupon } from "../../cart/hooks/useCoupon";
 import { useCart } from "../../cart/hooks/useCart";
-import { Body } from "../../../shared/typography";
+import { Body, H1 } from "../../../shared/typography";
+import Button from "../../../shared/components/Button";
 
 type Props = {
   product: Product;
 };
+
+const InfoSection = styled(Section)`
+  width: 50%;
+`;
+
+const PriceWrapper = styled.div`
+  margin-top: 24px;
+`;
+
+const OriginalPrice = styled(Body)`
+  text-decoration: line-through;
+`;
+
+const FinalPrice = styled(Body)`
+  font-size: 28px;
+`;
+
+const QuantityWrapper = styled.div`
+  margin-top: 24px;
+`;
+
+const Actions = styled.div`
+  margin-top: 24px;
+`;
+
+const Tags = styled.div`
+  margin-top: 24px;
+`;
+
+const Tag = styled.span`
+  margin-right: 8px;
+`;
 
 export function ProductInfo({ product }: Props) {
   const quantity = useProductsStore((s: ProductsState) => s.quantity);
@@ -46,9 +80,9 @@ export function ProductInfo({ product }: Props) {
   }, [product, discount]);
 
   return (
-    <Section style={{ width: "50%" }}>
+    <InfoSection>
       <Body>{product.category}</Body>
-      <h1>{product.name}</h1>
+      <H1>{product.name}</H1>
       <Body>SKU: {product.sku}</Body>
 
       <div>
@@ -56,26 +90,26 @@ export function ProductInfo({ product }: Props) {
         <span> ({product.reviewCount} reviews)</span>
       </div>
 
-      <div style={{ marginTop: 24 }}>
+      <PriceWrapper>
         {product.salePrice ? (
           <>
-            <Body style={{ textDecoration: "line-through" }}>
+            <OriginalPrice>
               {product.currency} {product.price.toFixed(2)}
-            </Body>
-            <Body style={{ fontSize: 28 }}>
+            </OriginalPrice>
+            <FinalPrice>
               {product.currency} {finalPrice.toFixed(2)}
-            </Body>
+            </FinalPrice>
           </>
         ) : (
-          <Body style={{ fontSize: 28 }}>
+          <FinalPrice>
             {product.currency} {finalPrice.toFixed(2)}
-          </Body>
+          </FinalPrice>
         )}
-      </div>
+      </PriceWrapper>
 
       <Body>{product.stock > 0 ? `${product.stock} in stock` : "Out of stock"}</Body>
 
-      <div style={{ marginTop: 24 }}>
+      <QuantityWrapper>
         <label>
           Quantity
           <input
@@ -88,7 +122,7 @@ export function ProductInfo({ product }: Props) {
             }}
           />
         </label>
-      </div>
+      </QuantityWrapper>
 
       <CouponInput
         code={couponCode}
@@ -103,28 +137,26 @@ export function ProductInfo({ product }: Props) {
         onPostcodeChange={setPostcode}
       />
 
-      <div style={{ marginTop: 24 }}>
-        <button
+      <Actions>
+        <Button
           disabled={product.stock === 0}
           onClick={() =>
             addToCart({ productId: product.id, quantity, selectedImage })
           }
         >
           Add to cart
-        </button>
-        <button onClick={toggle}>
+        </Button>
+        <Button variant="secondary" onClick={toggle}>
           {isWishlisted ? "Remove from wishlist" : "Add to wishlist"}
-        </button>
-      </div>
+        </Button>
+      </Actions>
 
-      <div style={{ marginTop: 24 }}>
+      <Tags>
         <Body>Tags:</Body>
         {product.tags.map((tag) => (
-          <span key={tag} style={{ marginRight: 8 }}>
-            #{tag}
-          </span>
+          <Tag key={tag}>#{tag}</Tag>
         ))}
-      </div>
-    </Section>
+      </Tags>
+    </InfoSection>
   );
 }

@@ -1,14 +1,20 @@
-import React from "react";
+import styled from "styled-components";
 import { Section } from "../../../shared/components/Section";
 import { StarRating } from "./StarRating";
 import { useProductsStore } from "../store";
 import type { ProductsState } from "../store";
 import { useReviews } from "../api/productsApi";
+import { Body, Caption, H2, H3 } from "../../../shared/typography";
+import Button from "../../../shared/components/Button";
 
 type Props = {
   productId: string;
   description: string;
 };
+
+const ReviewCard = styled.article`
+  border-top: 1px solid ${({ theme }) => theme.colors.border};
+`;
 
 export function ProductTabs({ productId, description }: Props) {
   const activeTab = useProductsStore((s: ProductsState) => s.activeTab);
@@ -22,20 +28,20 @@ export function ProductTabs({ productId, description }: Props) {
 
   return (
     <Section marginTop={48}>
-      <button onClick={() => setActiveTab("description")}>Description</button>
-      <button onClick={() => setActiveTab("reviews")}>Reviews</button>
-      <button onClick={() => setActiveTab("delivery")}>Delivery</button>
+      <Button onClick={() => setActiveTab("description")}>Description</Button>
+      <Button onClick={() => setActiveTab("reviews")}>Reviews</Button>
+      <Button onClick={() => setActiveTab("delivery")}>Delivery</Button>
 
       {activeTab === "description" && (
         <div>
-          <h2>Description</h2>
-          <p>{description}</p>
+          <H2>Description</H2>
+          <Body>{description}</Body>
         </div>
       )}
 
       {activeTab === "reviews" && (
         <div>
-          <h2>Reviews</h2>
+          <H2>Reviews</H2>
 
           <label>
             Sort by
@@ -49,27 +55,27 @@ export function ProductTabs({ productId, description }: Props) {
             </select>
           </label>
 
-          {loadingReviews && <p>Loading reviews...</p>}
+          {loadingReviews && <Body>Loading reviews...</Body>}
 
           {!loadingReviews &&
             reviews.map((review) => (
-              <article key={review.id} style={{ borderTop: "1px solid #ddd" }}>
-                <h3>{review.author}</h3>
+              <ReviewCard key={review.id}>
+                <H3>{review.author}</H3>
                 <StarRating rating={review.rating} />
-                <p>{review.body}</p>
-                <small>{review.createdAt}</small>
-              </article>
+                <Body>{review.body}</Body>
+                <Caption>{review.createdAt}</Caption>
+              </ReviewCard>
             ))}
         </div>
       )}
 
       {activeTab === "delivery" && (
         <div>
-          <h2>Delivery and returns</h2>
-          <p>
+          <H2>Delivery and returns</H2>
+          <Body>
             Delivery estimates are calculated based on stock availability and
             your postcode.
-          </p>
+          </Body>
         </div>
       )}
     </Section>

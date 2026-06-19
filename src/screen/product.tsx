@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import styled from "styled-components";
 import { PageWrapper } from "../shared/components/PageWrapper";
 import {
   useProduct,
@@ -15,6 +16,11 @@ import { RecommendationList } from "../features/products/components/Recommendati
 import { RecentlyViewed } from "../features/products/components/RecentlyViewed";
 import { Body, H1 } from "../shared/typography";
 import Button from "../shared/components/Button";
+
+const ProductLayout = styled.div`
+  display: flex;
+  gap: 32px;
+`;
 
 export default function ProductPageClient({
   productId,
@@ -75,7 +81,7 @@ export default function ProductPageClient({
 
   return (
     <PageWrapper>
-      <div style={{ display: "flex", gap: 32 }}>
+      <ProductLayout>
         <ProductGallery
           images={product.images}
           selectedImage={selectedImage}
@@ -83,7 +89,7 @@ export default function ProductPageClient({
           onSelectImage={setSelectedImage}
         />
         <ProductInfo product={product} />
-      </div>
+      </ProductLayout>
 
       <ProductTabs productId={productId} description={product.description} />
 

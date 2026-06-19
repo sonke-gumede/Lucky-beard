@@ -1,3 +1,4 @@
+import styled from "styled-components";
 import { Section } from "../../../shared/components/Section";
 
 type Props = {
@@ -7,6 +8,23 @@ type Props = {
   onSelectImage: (image: string) => void;
 };
 
+const GallerySection = styled(Section)`
+  width: 50%;
+`;
+
+const Thumbnails = styled.div`
+  display: flex;
+  gap: 8px;
+  margin-top: 16px;
+`;
+
+const ThumbnailButton = styled.button<{ $active: boolean }>`
+  border: ${({ $active }) => ($active ? "2px solid black" : "1px solid #ccc")};
+  background: none;
+  padding: 0;
+  cursor: pointer;
+`;
+
 export function ProductGallery({
   images,
   selectedImage,
@@ -14,25 +32,22 @@ export function ProductGallery({
   onSelectImage,
 }: Props) {
   return (
-    <Section style={{ width: "50%" }}>
+    <GallerySection>
       <div>
         <img src={selectedImage} alt={productName} width={600} height={600} />
       </div>
 
-      <div style={{ display: "flex", gap: 8, marginTop: 16 }}>
+      <Thumbnails>
         {images.map((image) => (
-          <button
+          <ThumbnailButton
             key={image}
+            $active={image === selectedImage}
             onClick={() => onSelectImage(image)}
-            style={{
-              border:
-                image === selectedImage ? "2px solid black" : "1px solid #ccc",
-            }}
           >
             <img src={image} alt="" width={80} height={80} />
-          </button>
+          </ThumbnailButton>
         ))}
-      </div>
-    </Section>
+      </Thumbnails>
+    </GallerySection>
   );
 }
