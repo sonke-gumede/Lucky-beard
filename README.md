@@ -13,6 +13,7 @@ A React implementation of a product detail page, built to match the design and t
 ## Features
 
 ### Product Detail Screen
+
 - Product image gallery with selectable thumbnails
 - Product info panel: name, category, SKU, price (with sale price support), stock level
 - Star rating display with review count
@@ -21,13 +22,10 @@ A React implementation of a product detail page, built to match the design and t
 - Product tabs: description, specifications, reviews
 
 ### Cart
+
 - Add to cart via `useCart` hook
 - Coupon code input with discount application (`useCoupon` hook)
 - Delivery estimator by postcode
-
-### Recently Viewed & Recommendations
-- Tracks recently viewed products via a custom `useRecentlyViewed` hook
-- Recommendation list component
 
 ## Architecture
 
@@ -63,10 +61,10 @@ Typography components (`H1`–`H6`, `Body`, `Caption`) accept optional `color` a
 
 Fonts match the luckybeard.com site, loaded from Adobe Typekit:
 
-| Font | Role | Weights |
-|------|------|---------|
+| Font                     | Role              | Weights            |
+| ------------------------ | ----------------- | ------------------ |
 | `abacaxi-latin-variable` | Body / sans-serif | 100–800 (variable) |
-| `ivypresto-headline` | Headings / serif | 300, 400, 600, 700 |
+| `ivypresto-headline`     | Headings / serif  | 300, 400, 600, 700 |
 
 CSS custom properties `--font-sans` and `--font-serif` are exposed on `:root`.
 
